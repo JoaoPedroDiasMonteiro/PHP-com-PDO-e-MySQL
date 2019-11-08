@@ -8,17 +8,23 @@ try {
     $conexao = new PDO($dsn,$usuario,$senha);
 
     $query = '
-        select * from tb_usuarios where id = 1
+        select * from tb_usuarios
     ';
 
-    $stmt = $conexao->query($query);
-    $usuario = $stmt->fetch(PDO::FETCH_OBJ);
+    foreach ($conexao->query($query) as $key => $value) {
+        echo $value['nome'];
+        echo '<hr>';
+    }
 
-    echo '<pre>';
-    print_r($usuario);
-    echo '</pre>';
+    // $stmt = $conexao->query($query);
+    // $lista_usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    echo $usuario->nome ;
+    // foreach ($lista_usuarios as $key => $value) {
+    //     print_r($value['nome']);
+    //     echo '<hr>';
+    // }
+
+
 
 } catch (PDOException $e) {
     echo 'Erro: '. $e->getCode(). ' Mensagem: '.$e->getMessage();
