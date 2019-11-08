@@ -12,13 +12,13 @@ try {
     ';
 
     $stmt = $conexao->query($query);
-    $lista = $stmt->fetchAll();
+    $lista = $stmt->fetchAll(PDO::FETCH_OBJ);
 
     echo '<pre>';
     print_r($lista);
     echo '</pre>';
 
-    echo $lista[0]['nome'];
+    echo $lista[0]->nome ;
 
 } catch (PDOException $e) {
     echo 'Erro: '. $e->getCode(). ' Mensagem: '.$e->getMessage();
