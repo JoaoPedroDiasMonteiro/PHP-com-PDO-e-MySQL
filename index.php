@@ -1,35 +1,61 @@
 <?php
 
-$dsn = 'mysql:host=localhost;dbname=php_com_pdo';
-$usuario = 'root';
-$senha = '';
+// if (!empyt($_POST['usuario']) && !empyt($_POST['senha'])) {
 
-try {
-    $conexao = new PDO($dsn,$usuario,$senha);
 
-    $query = '
-        select * from tb_usuarios
-    ';
+    $dsn = 'mysql:host=localhost;dbname=php_com_pdo';
+    $usuario = 'root';
+    $senha = '';
 
-    foreach ($conexao->query($query) as $key => $value) {
-        echo $value['nome'];
+    try {
+        $conexao = new PDO($dsn, $usuario, $senha);
+
+        // query
+        $query = "select * from tb_usuarios where";
+        $query .= " email = '{$_POST['usuario']}' ";
+        $query .= " AND senha = '{$_POST['senha']}' ";
+
+        echo $query;
+
+        $stmt = $conexao->query($query);
+        $usuario = $stmt->fetch();
         echo '<hr>';
+        echo '<pre>';
+        print_r($usuario);
+        echo '</pre>';
+
+    } catch (PDOException $e) {
+        echo 'Erro: ' . $e->getCode() . ' Mensagem: ' . $e->getMessage();
     }
-
-    // $stmt = $conexao->query($query);
-    // $lista_usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-    // foreach ($lista_usuarios as $key => $value) {
-    //     print_r($value['nome']);
-    //     echo '<hr>';
-    // }
-
-
-
-} catch (PDOException $e) {
-    echo 'Erro: '. $e->getCode(). ' Mensagem: '.$e->getMessage();
-}
+// }
 
 
 
 ?>
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    <form action="index.php" method="post">
+        <input name="usuario" type="text" placeholder="usuário">
+        <br>
+        <input name="senha" type="password" placeholder="senha">
+        <br>
+        <button type="submit">Entrar</button>
+
+    </form>
+</body>
+
+</html>
