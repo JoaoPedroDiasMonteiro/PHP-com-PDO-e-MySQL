@@ -8,17 +8,17 @@ try {
     $conexao = new PDO($dsn,$usuario,$senha);
 
     $query = '
-        select * from tb_usuarios
+        select * from tb_usuarios where id = 1
     ';
 
     $stmt = $conexao->query($query);
-    $lista = $stmt->fetchAll(PDO::FETCH_OBJ);
+    $usuario = $stmt->fetch(PDO::FETCH_OBJ);
 
     echo '<pre>';
-    print_r($lista);
+    print_r($usuario);
     echo '</pre>';
 
-    echo $lista[0]->nome ;
+    echo $usuario->nome ;
 
 } catch (PDOException $e) {
     echo 'Erro: '. $e->getCode(). ' Mensagem: '.$e->getMessage();
